@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weikwer.market.mapper.CommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.weikwer.market.bean.Commodity" >
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="add_date" property="addDate" jdbcType="DATE" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DOUBLE" />
+    <result column="goods_stock" property="goodsStock" jdbcType="INTEGER" />
+    <result column="goods_sales_volume" property="goodsSalesVolume" jdbcType="INTEGER" />
+    <result column="goods_describe" property="goodsDescribe" jdbcType="VARCHAR" />
+    <result column="recommended_order" property="recommendedOrder" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="goods_url" property="goodsUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.weikwer.market.bean.Commodity" >
+    insert into commodity (goods_id, add_date, goods_name, 
+      goods_price, goods_stock, goods_sales_volume, 
+      goods_describe, recommended_order, delete_flag, 
+      goods_url)
+    values (#{goodsId,jdbcType=BIGINT}, #{addDate,jdbcType=DATE}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsPrice,jdbcType=DOUBLE}, #{goodsStock,jdbcType=INTEGER}, #{goodsSalesVolume,jdbcType=INTEGER}, 
+      #{goodsDescribe,jdbcType=VARCHAR}, #{recommendedOrder,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER}, 
+      #{goodsUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weikwer.market.bean.Commodity" >
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="addDate != null" >
+        add_date,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsStock != null" >
+        goods_stock,
+      </if>
+      <if test="goodsSalesVolume != null" >
+        goods_sales_volume,
+      </if>
+      <if test="goodsDescribe != null" >
+        goods_describe,
+      </if>
+      <if test="recommendedOrder != null" >
+        recommended_order,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="goodsUrl != null" >
+        goods_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="addDate != null" >
+        #{addDate,jdbcType=DATE},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsStock != null" >
+        #{goodsStock,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSalesVolume != null" >
+        #{goodsSalesVolume,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDescribe != null" >
+        #{goodsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendedOrder != null" >
+        #{recommendedOrder,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="goodsUrl != null" >
+        #{goodsUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+    <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select * from commodity
+        <if test="goodsId != null || addDate != null || goodsName != null || goodsPrice != null || goodsStock != null || goodsSalesVolume != null || goodsDescribe != null || recommendedOrder != null || deleteFlag != null || goodsUrl != null " >
+            where
+            <trim prefix="" suffix="" suffixOverrides="and" >
+                <if test="goodsId != null" >
+                    goods_id = #{goodsId} and
+                </if>
+                <if test="addDate != null" >
+                    add_date = #{addDate} and
+                </if>
+                <if test="goodsName != null" >
+                    goods_name = #{goodsName} and
+                </if>
+                <if test="goodsPrice != null" >
+                    goods_price = #{goodsPrice} and
+                </if>
+                <if test="goodsStock != null" >
+                    goods_stock = #{goodsStock} and
+                </if>
+                <if test="goodsSalesVolume != null" >
+                    goods_sales_volume = #{goodsSalesVolume} and
+                </if>
+                <if test="goodsDescribe != null" >
+                    goods_describe = #{goodsDescribe} and
+                </if>
+                <if test="recommendedOrder != null" >
+                    recommended_order = #{recommendedOrder} and
+                </if>
+                <if test="deleteFlag != null" >
+                    delete_flag = #{deleteFlag} and
+                </if>
+                <if test="goodsUrl != null" >
+                    goods_url = #{goodsUrl} and
+                </if>
+            </trim>
+        </if>
+        limit #{begin},#{pageSize}
+    </select>
+
+
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from commodity
+      <if test="goodsId != null||addDate != null||goodsName != null||goodsPrice != null||goodsStock != null||goodsSalesVolume != null||goodsDescribe != null||recommendedOrder != null||recommendedOrder != null||deleteFlag != null||goodsUrl != null" >
+      where
+    <trim prefix="" suffix="" suffixOverrides="and" >
+    <if test="goodsId != null" >
+      goods_id = #{goodsId} and
+    </if>
+    <if test="addDate != null" >
+      add_date = #{addDate} and
+    </if>
+    <if test="goodsName != null" >
+      goods_name = #{goodsName} and
+    </if>
+    <if test="goodsPrice != null" >
+      goods_price = #{goodsPrice} and
+    </if>
+    <if test="goodsStock != null" >
+      goods_stock = #{goodsStock} and
+    </if>
+    <if test="goodsSalesVolume != null" >
+      goods_sales_volume = #{goodsSalesVolume} and
+    </if>
+    <if test="goodsDescribe != null" >
+      goods_describe = #{goodsDescribe} and
+    </if>
+    <if test="recommendedOrder != null" >
+      recommended_order = #{recommendedOrder} and
+    </if>
+    <if test="deleteFlag != null" >
+      delete_flag = #{deleteFlag} and
+    </if>
+    <if test="goodsUrl != null" >
+      goods_url = #{goodsUrl} and
+    </if>
+    </trim>
+
+      </if>
+  </select>
+
+    <update id="update" parameterType="com.weikwer.market.bean.Commodity">
+        update commodity
+        <set>
+            <trim prefix="" suffix="" suffixOverrides="," >
+                <if test="addDate != null" >
+                    add_date = #{addDate} ,
+                </if>
+                <if test="goodsName != null" >
+                    goods_name = #{goodsName} ,
+                </if>
+                <if test="goodsPrice != null" >
+                    goods_price = #{goodsPrice} ,
+                </if>
+                <if test="goodsStock != null" >
+                    goods_stock = #{goodsStock} ,
+                </if>
+                <if test="goodsSalesVolume != null" >
+                    goods_sales_volume = #{goodsSalesVolume} ,
+                </if>
+                <if test="goodsDescribe != null" >
+                    goods_describe = #{goodsDescribe} ,
+                </if>
+                <if test="recommendedOrder != null" >
+                    recommended_order = #{recommendedOrder} ,
+                </if>
+                <if test="deleteFlag != null" >
+                    delete_flag = #{deleteFlag} ,
+                </if>
+                <if test="goodsUrl != null" >
+                    goods_url = #{goodsUrl} ,
+                </if>
+            </trim>
+        </set>
+        where  goods_id = #{goodsId}
+    </update>
+
+
+    <delete id="deleteByGoodsId" parameterType="com.weikwer.market.bean.Commodity">
+        DELETE FROM commodity WHERE
+        <trim prefix="" suffix="" suffixOverrides="and" >
+            goods_id = #{goodsId} and
+        </trim>
+    </delete>
+
+</mapper>

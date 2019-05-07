@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weikwer.market.mapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.weikwer.market.bean.Users" >
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="reg_date" property="regDate" jdbcType="DATE" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="user_tel_num" property="userTelNum" jdbcType="VARCHAR" />
+    <result column="weixin_id" property="weixinId" jdbcType="VARCHAR" />
+    <result column="user_sex" property="userSex" jdbcType="VARCHAR" />
+    <result column="user_birthday" property="userBirthday" jdbcType="DATE" />
+  </resultMap>
+  <!--<insert id="insert" parameterType="Users" >-->
+    <!--insert into users (user_id, user_pwd, reg_date, -->
+      <!--open_id, user_tel_num, weixin_id, -->
+      <!--user_sex, user_birthday)-->
+    <!--values (#{userId,jdbcType=BIGINT}, #{userPwd,jdbcType=VARCHAR}, #{regDate,jdbcType=DATE}, -->
+      <!--#{openId,jdbcType=VARCHAR}, #{userTelNum,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, -->
+      <!--#{userSex,jdbcType=VARCHAR}, #{userBirthday,jdbcType=DATE})-->
+  <!--</insert>-->
+    <insert id="insertByTelNum" parameterType="com.weikwer.market.bean.Users" >
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="userPwd != null" >
+                user_pwd,
+            </if>
+            <if test="regDate != null" >
+                reg_date,
+            </if>
+            <if test="openId != null" >
+                open_id,
+            </if>
+            <if test="userTelNum != null" >
+                user_tel_num,
+            </if>
+            <if test="weixinId != null" >
+                weixin_id,
+            </if>
+            <if test="userSex != null" >
+                user_sex,
+            </if>
+            <if test="userBirthday != null" >
+                user_birthday,
+            </if>
+        </trim>
+        select
+        <trim prefix="" suffix="" suffixOverrides="," >
+            <if test="userId != null" >
+                #{userId},
+            </if>
+            <if test="userPwd != null" >
+                #{userPwd},
+            </if>
+            <if test="regDate != null" >
+                #{regDate},
+            </if>
+            <if test="openId != null" >
+                #{openId},
+            </if>
+            <if test="userTelNum != null" >
+                #{userTelNum},
+            </if>
+            <if test="weixinId != null" >
+                #{weixinId},
+            </if>
+            <if test="userSex != null" >
+                #{userSex},
+            </if>
+            <if test="userBirthday != null" >
+                #{userBirthday},
+            </if>
+        </trim>
+        from dual
+        where not exists (
+        select * from users
+        where user_tel_num = #{userTelNum}
+        )
+    </insert>
+
+
+
+
+    <insert id="insertByOpenId" parameterType="com.weikwer.market.bean.WechatUserInfo" >
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="wechatAvatarUrl != null" >
+                wechat_avatar_url,
+            </if>
+            <if test="wechatCity != null" >
+                wechat_city,
+            </if>
+            <if test="wechatCountry != null" >
+                wechat_country,
+            </if>
+            <if test="wechatNickname != null" >
+                wechat_nickname,
+            </if>
+            <if test="wechatProvince != null" >
+                wechat_province,
+            </if>
+            <if test="openId != null" >
+                open_id,
+            </if>
+            <if test="gender != null" >
+                gender,
+            </if>
+        </trim>
+        select
+        <trim prefix="" suffix="" suffixOverrides="," >
+            <if test="wechatAvatarUrl != null" >
+                #{wechatAvatarUrl},
+            </if>
+            <if test="wechatCity != null" >
+                #{wechatCity},
+            </if>
+            <if test="wechatCountry != null" >
+                #{wechatCountry},
+            </if>
+            <if test="wechatNickname != null" >
+                #{wechatNickname},
+            </if>
+            <if test="wechatProvince != null" >
+                #{wechatProvince},
+            </if>
+            <if test="openId != null" >
+                #{openId},
+            </if>
+            <if test="gender != null" >
+                #{gender},
+            </if>
+        </trim>
+        from dual
+        where not exists (
+        select * from users
+        where open_id = #{openId}
+        )
+    </insert>
+
+    <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select * from users where
+        <trim prefix="" suffix="" suffixOverrides="and" >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=BIGINT} and
+            </if>
+            <if test="userPwd != null" >
+                user_pwd = #{userPwd,jdbcType=VARCHAR} and
+            </if>
+            <if test="regDate != null" >
+               reg_date = #{regDate,jdbcType=DATE} and
+            </if>
+            <if test="openId != null" >
+               open_id =  #{openId,jdbcType=VARCHAR} and
+            </if>
+            <if test="userTelNum != null" >
+                user_tel_num  =  #{userTelNum,jdbcType=VARCHAR} and
+            </if>
+            <if test="weixinId != null" >
+                weixin_id = #{weixinId,jdbcType=VARCHAR} and
+            </if>
+            <if test="userSex != null" >
+                user_sex = #{userSex,jdbcType=VARCHAR} and
+            </if>
+            <if test="userBirthday != null" >
+                user_birthday  = #{userBirthday,jdbcType=DATE} and
+            </if>
+        </trim>
+        limit #{begin},#{pageSize}
+    </select>
+
+    <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from users where
+        <trim prefix="" suffix="" suffixOverrides="and" >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=BIGINT} and
+            </if>
+            <if test="userPwd != null" >
+                user_pwd = #{userPwd,jdbcType=VARCHAR} and
+            </if>
+            <if test="regDate != null" >
+                reg_date = #{regDate,jdbcType=DATE} and
+            </if>
+            <if test="openId != null" >
+                open_id =  #{openId,jdbcType=VARCHAR} and
+            </if>
+            <if test="userTelNum != null" >
+                user_tel_num  =  #{userTelNum,jdbcType=VARCHAR} and
+            </if>
+            <if test="weixinId != null" >
+                weixin_id = #{weixinId,jdbcType=VARCHAR} and
+            </if>
+            <if test="userSex != null" >
+                user_sex = #{userSex,jdbcType=VARCHAR} and
+            </if>
+            <if test="userBirthday != null" >
+                user_birthday  = #{userBirthday,jdbcType=DATE} and
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateWithMap" parameterType="com.weikwer.market.bean.Users">
+        update users
+        <set>
+            <trim prefix="" suffix="" suffixOverrides="," >
+                <if test="userId != null" >
+                    user_id = #{userId} ,
+                </if>
+                <if test="userPwd != null" >
+                    user_pwd = #{userPwd} ,
+                </if>
+                <if test="regDate != null" >
+                    reg_date = #{regDate} ,
+                </if>
+                <if test="openId != null" >
+                    open_id = #{openId} ,
+                </if>
+                <if test="userTelNum != null" >
+                    user_tel_num = #{userTelNum} ,
+                </if>
+                <if test="weixinId != null" >
+                    weixin_id = #{weixinId} ,
+                </if>
+                <if test="userSex != null" >
+                    user_sex = #{userSex} ,
+                </if>
+                <if test="userBirthday != null" >
+                    user_birthday = #{userBirthday} ,
+                </if>
+            </trim>
+        </set>
+        where
+        <trim prefix="" suffix="" suffixOverrides="and" >
+            <if test="userId != null" >
+                user_id = #{userId} and
+            </if>
+            <if test="openId != null" >
+                open_id = #{openId} and
+            </if>
+            <if test="userTelNum != null" >
+                user_tel_num = #{userTelNum} and
+            </if>
+        </trim>
+    </update>
+
+
+</mapper>

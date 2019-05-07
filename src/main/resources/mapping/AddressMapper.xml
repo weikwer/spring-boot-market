@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weikwer.market.mapper.AddressMapper" >
+  <resultMap id="BaseResultMap" type="com.weikwer.market.bean.Address" >
+    <result column="addr_id" property="addrId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="detail_info" property="detailInfo" jdbcType="VARCHAR" />
+    <result column="tel_number" property="telNumber" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="postal_code" property="postalCode" jdbcType="VARCHAR" />
+    <result column="county_name" property="countyName" jdbcType="VARCHAR" />
+    <result column="national_code" property="nationalCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.weikwer.market.bean.Address" >
+    insert into address (addr_id, user_id, sort, 
+      province_name, city_name, region, 
+      detail_info, tel_number, user_name, 
+      postal_code, county_name, national_code
+      )
+    values (#{addrId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{sort,jdbcType=INTEGER}, 
+      #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{detailInfo,jdbcType=VARCHAR}, #{telNumber,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{postalCode,jdbcType=VARCHAR}, #{countyName,jdbcType=VARCHAR}, #{nationalCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.weikwer.market.bean.Address" >
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="detailInfo != null" >
+        detail_info,
+      </if>
+      <if test="telNumber != null" >
+        tel_number,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="postalCode != null" >
+        postal_code,
+      </if>
+      <if test="countyName != null" >
+        county_name,
+      </if>
+      <if test="nationalCode != null" >
+        national_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="detailInfo != null" >
+        #{detailInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="telNumber != null" >
+        #{telNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="postalCode != null" >
+        #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="countyName != null" >
+        #{countyName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalCode != null" >
+        #{nationalCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateWithMap" parameterType="java.util.Map">
+    update address
+    <set>
+      <trim prefix="" suffix="" suffixOverrides="," >
+        <if test="addrId != null" >
+          addr_id = #{addrId} ,
+        </if>
+        <if test="userId != null" >
+          user_id = #{userId} ,
+        </if>
+        <if test="sort != null" >
+          sort = #{sort} ,
+        </if>
+        <if test="provinceName != null" >
+          province_name = #{provinceName} ,
+        </if>
+        <if test="cityName != null" >
+          city_name = #{cityName} ,
+        </if>
+        <if test="region != null" >
+          region = #{region} ,
+        </if>
+        <if test="detailInfo != null" >
+          detail_info = #{detailInfo} ,
+        </if>
+        <if test="telNumber != null" >
+          tel_number = #{telNumber} ,
+        </if>
+        <if test="userName != null" >
+          user_name = #{userName} ,
+        </if>
+        <if test="postalCode != null" >
+          postal_code = #{postalCode} ,
+        </if>
+        <if test="countyName != null" >
+          county_name = #{countyName} ,
+        </if>
+        <if test="nationalCode != null" >
+          national_code = #{nationalCode} ,
+        </if>
+      </trim>
+    </set>
+    where
+    <trim prefix="" suffix="" suffixOverrides="and" >
+      addr_id = #{addrId} and
+    </trim>
+  </update>
+
+
+    <delete id="deleteByAddrId" parameterType="java.lang.Long">
+        DELETE FROM address WHERE
+        <trim prefix="" suffix="" suffixOverrides="and" >
+            addr_id = #{addrId} and
+        </trim>
+    </delete>
+
+
+
+    <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select * from address
+        <if test="addrId != null || userId != null || sort != null || provinceName != null || cityName != null || region != null || detailInfo != null || telNumber != null || userName != null || postalCode != null || countyName != null || nationalCode != null " >
+            where
+            <trim prefix="" suffix="" suffixOverrides="and" >
+                <if test="addrId != null" >
+                    addr_id = #{addrId} and
+                </if>
+                <if test="userId != null" >
+                    user_id = #{userId} and
+                </if>
+                <if test="sort != null" >
+                    sort = #{sort} and
+                </if>
+                <if test="provinceName != null" >
+                    province_name = #{provinceName} and
+                </if>
+                <if test="cityName != null" >
+                    city_name = #{cityName} and
+                </if>
+                <if test="region != null" >
+                    region = #{region} and
+                </if>
+                <if test="detailInfo != null" >
+                    detail_info = #{detailInfo} and
+                </if>
+                <if test="telNumber != null" >
+                    tel_number = #{telNumber} and
+                </if>
+                <if test="userName != null" >
+                    user_name = #{userName} and
+                </if>
+                <if test="postalCode != null" >
+                    postal_code = #{postalCode} and
+                </if>
+                <if test="countyName != null" >
+                    county_name = #{countyName} and
+                </if>
+                <if test="nationalCode != null" >
+                    national_code = #{nationalCode} and
+                </if>
+            </trim>
+        </if>
+        limit #{begin},#{pageSize}
+    </select>
+
+
+    <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from address
+        <if test="addrId != null || userId != null || sort != null || provinceName != null || cityName != null || region != null || detailInfo != null || telNumber != null || userName != null || postalCode != null || countyName != null || nationalCode != null " >
+            where
+            <trim prefix="" suffix="" suffixOverrides="and" >
+                <if test="addrId != null" >
+                    addr_id = #{addrId} and
+                </if>
+                <if test="userId != null" >
+                    user_id = #{userId} and
+                </if>
+                <if test="sort != null" >
+                    sort = #{sort} and
+                </if>
+                <if test="provinceName != null" >
+                    province_name = #{provinceName} and
+                </if>
+                <if test="cityName != null" >
+                    city_name = #{cityName} and
+                </if>
+                <if test="region != null" >
+                    region = #{region} and
+                </if>
+                <if test="detailInfo != null" >
+                    detail_info = #{detailInfo} and
+                </if>
+                <if test="telNumber != null" >
+                    tel_number = #{telNumber} and
+                </if>
+                <if test="userName != null" >
+                    user_name = #{userName} and
+                </if>
+                <if test="postalCode != null" >
+                    postal_code = #{postalCode} and
+                </if>
+                <if test="countyName != null" >
+                    county_name = #{countyName} and
+                </if>
+                <if test="nationalCode != null" >
+                    national_code = #{nationalCode} and
+                </if>
+            </trim>
+        </if>
+    </select>
+
+
+</mapper>

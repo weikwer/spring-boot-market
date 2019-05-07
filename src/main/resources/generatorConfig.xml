@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry location="C:\Users\xuqimin\Downloads\mysql-connector-java-8.0.12.jar"/>
+    <context id="context1">
+        <!-- 是否生成注释 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/db_pst?serverTimezone=UTC"
+                        userId="root" password="123456" />
+
+        <!-- 生成的包名和工程名 -->
+        <javaModelGenerator targetPackage="com.pst.pst.bean"
+                            targetProject="src/main/java"/>
+        <!-- xml映射文件   -->
+        <sqlMapGenerator targetPackage="com.pst.pst.configure"
+                         targetProject="src/main/java" />
+        <!--  mapper接口    -->
+        <javaClientGenerator targetPackage="com.pst.pst.mapper"
+                             targetProject="src/main/java" type="XMLMAPPER" />
+
+        <!-- 数据库表 以及是否生成example-->
+        <!--<table  tableName="orders" domainObjectName="Orders"-->
+                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
+        <!--</table>-->
+
+
+        <table  tableName="address" domainObjectName="Address"
+                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+                enableSelectByExample="false" selectByExampleQueryId="false" >
+        </table>
+
+        <!--<table  tableName="order_detail" domainObjectName="Order_detail"-->
+                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
+        <!--</table>-->
+
+        <!--<table  tableName="commodity" domainObjectName="Commodity"-->
+                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
+        <!--</table>-->
+
+        <!--<table  tableName="users" domainObjectName="Users"-->
+                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+                <!--enableSelectByExample="false" selectByExampleQueryId="false"-->
+                <!--&gt;-->
+        <!--</table>-->
+    </context>
+</generatorConfiguration>

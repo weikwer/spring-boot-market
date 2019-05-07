@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weikwer.market.mapper.Shop_cartMapper" >
+  <resultMap id="BaseResultMap" type="com.weikwer.market.bean.Shop_cart" >
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+  </resultMap>
+
+
+  <resultMap id="CartItemResultMap" type="com.weikwer.market.bean.CartItem" >
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
+    <result column="goods_url" property="goodsUrl" jdbcType="VARCHAR" />
+    <result column="order_price" property="orderPrice" jdbcType="DOUBLE" />
+      <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+      <result column="goods_price" property="goodsPrice" jdbcType="DOUBLE" />
+  </resultMap>
+
+
+  <insert id="insert" parameterType="com.weikwer.market.bean.Shop_cart" >
+    insert into shop_cart (user_id, order_id)
+    values (#{userId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weikwer.market.bean.Shop_cart" >
+    insert into shop_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select * from shop_cart where
+    <trim prefix="" suffix="" suffixOverrides="and" >
+      <if test="userId != null" >
+        user_id = #{userId} and
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId} and
+      </if>
+    </trim>
+  </select>
+
+
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from shop_cart where
+    <trim prefix="" suffix="" suffixOverrides="and" >
+      <if test="userId != null" >
+        user_id = #{userId} and
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId} and
+      </if>
+    </trim>
+  </select>
+
+  <select id="ifOrderExistInShopCart" parameterType="java.util.Map" resultType="java.lang.Long">
+         select order_id from shop_cart where
+         ( shop_cart.order_id in
+             (select order_id from
+                   orders where orders.order_id in
+                     (select order_id from order_detail where order_detail.goods_id=#{goodsId})
+              )
+          ) and shop_cart.user_id=#{userId}
+  </select>
+
+    <delete id="deleteByUserIdAndOrderId" parameterType="com.weikwer.market.bean.Shop_cart">
+      DELETE FROM shop_cart WHERE
+        user_id = #{userId} and
+        order_id = #{orderId}
+    </delete>
+
+    <select id="selectCartItem" parameterType="java.lang.Long" resultMap="CartItemResultMap">
+        SELECT
+        orders.order_id,orders.order_price,order_detail.goods_number,commodity.goods_id ,
+        commodity.goods_url,commodity.goods_name,commodity.goods_price
+        FROM(
+          ((shop_cart LEFT JOIN orders ON shop_cart.order_id=orders.order_id)
+              LEFT JOIN order_detail ON orders.order_id=order_detail.order_id)
+                  LEFT JOIN commodity ON order_detail.goods_id = commodity.goods_id
+        )
+        WHERE shop_cart.user_id=#{userId}
+
+    </select>
+
+    <select id="selectCartItemOne" parameterType="java.util.Map" resultMap="CartItemResultMap">
+        SELECT
+        orders.order_id,orders.order_price,order_detail.goods_number,commodity.goods_id ,
+        commodity.goods_url,commodity.goods_name,commodity.goods_price
+        FROM(
+          ((shop_cart LEFT JOIN orders ON shop_cart.order_id=orders.order_id)
+              LEFT JOIN order_detail ON orders.order_id=order_detail.order_id)
+                  LEFT JOIN commodity ON order_detail.goods_id = commodity.goods_id
+        )
+        WHERE
+          shop_cart.user_id=#{userId} and order_detail.goods_id=#{goodsId}
+
+    </select>
+
+
+</mapper>

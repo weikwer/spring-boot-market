@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weikwer.market.mapper.Order_detailMapper" >
+  <resultMap id="BaseResultMap" type="com.weikwer.market.bean.Order_detail" >
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.weikwer.market.bean.Order_detail" >
+    insert into order_detail (order_id, goods_id, goods_number
+      )
+    values (#{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsNumber,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.weikwer.market.bean.Order_detail" >
+    insert into order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsNumber != null" >
+        goods_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsNumber != null" >
+        #{goodsNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+    <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select * from order_detail where
+        <trim prefix="" suffix="" suffixOverrides="and" >
+        <if test="orderId != null" >
+            order_id = #{orderId} and
+        </if>
+        <if test="goodsId != null" >
+            goods_id = #{goodsId} and
+        </if>
+        <if test="goodsNumber != null" >
+            goods_number = #{goodsNumber} and
+        </if>
+        </trim>
+    </select>
+
+
+    <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from order_detail where
+        <trim prefix="" suffix="" suffixOverrides="and" >
+        <if test="orderId != null" >
+            order_id = #{orderId} and
+        </if>
+        <if test="goodsId != null" >
+            goods_id = #{goodsId} and
+        </if>
+        <if test="goodsNumber != null" >
+            goods_number = #{goodsNumber} and
+        </if>
+        </trim>
+    </select>
+
+    <delete id="deleteByOrderId" parameterType="com.weikwer.market.bean.Order_detail">
+      DELETE FROM order_detail WHERE
+         order_id = #{orderId}
+    </delete>
+
+    <update id="updateWithMap" parameterType="com.weikwer.market.bean.Order_detail">
+        update order_detail
+        <set>
+            <trim prefix="" suffix="" suffixOverrides="," >
+                <if test="goodsId != null" >
+                    goods_id = #{goodsId} ,
+                </if>
+                <if test="goodsNumber != null" >
+                    goods_number = #{goodsNumber} ,
+                </if>
+            </trim>
+        </set>
+        where
+                order_id = #{orderId}
+
+    </update>
+
+</mapper>

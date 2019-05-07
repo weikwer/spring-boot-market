@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weikwer.market.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.weikwer.market.bean.Orders" >
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_date" property="orderDate" jdbcType="DATE" />
+    <result column="order_user" property="orderUser" jdbcType="INTEGER" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="order_price" property="orderPrice" jdbcType="DOUBLE" />
+    <result column="payment_method" property="paymentMethod" jdbcType="INTEGER" />
+    <result column="logistics_company" property="logisticsCompany" jdbcType="VARCHAR" />
+    <result column="logistics_number" property="logisticsNumber" jdbcType="VARCHAR" />
+    <result column="logistics_price" property="logisticsPrice" jdbcType="DOUBLE" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="order_context" property="orderContext" jdbcType="VARCHAR" />
+    <result column="recommended_order" property="recommendedOrder" jdbcType="INTEGER" />
+    <result column="order_uuid" property="orderUuid" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.weikwer.market.bean.Orders" >
+    insert into orders ( order_date, order_user,
+      order_status, order_price, payment_method, 
+      logistics_company, logistics_number, logistics_price, 
+      delete_flag, order_context, recommended_order, 
+      order_uuid)
+    values ( #{orderDate,jdbcType=DATE}, #{orderUser,jdbcType=INTEGER},
+      #{orderStatus,jdbcType=INTEGER}, #{orderPrice,jdbcType=DOUBLE}, #{paymentMethod,jdbcType=INTEGER}, 
+      #{logisticsCompany,jdbcType=VARCHAR}, #{logisticsNumber,jdbcType=VARCHAR}, #{logisticsPrice,jdbcType=DOUBLE}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{orderContext,jdbcType=VARCHAR}, #{recommendedOrder,jdbcType=INTEGER}, 
+      #{orderUuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weikwer.market.bean.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="orderUser != null" >
+        order_user,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="orderPrice != null" >
+        order_price,
+      </if>
+      <if test="paymentMethod != null" >
+        payment_method,
+      </if>
+      <if test="logisticsCompany != null" >
+        logistics_company,
+      </if>
+      <if test="logisticsNumber != null" >
+        logistics_number,
+      </if>
+      <if test="logisticsPrice != null" >
+        logistics_price,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="orderContext != null" >
+        order_context,
+      </if>
+      <if test="recommendedOrder != null" >
+        recommended_order,
+      </if>
+      <if test="orderUuid != null" >
+        order_uuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="orderUser != null" >
+        #{orderUser,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="orderPrice != null" >
+        #{orderPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentMethod != null" >
+        #{paymentMethod,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsCompany != null" >
+        #{logisticsCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNumber != null" >
+        #{logisticsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsPrice != null" >
+        #{logisticsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="orderContext != null" >
+        #{orderContext,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendedOrder != null" >
+        #{recommendedOrder,jdbcType=INTEGER},
+      </if>
+      <if test="orderUuid != null" >
+        #{orderUuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select * from orders where
+    <trim prefix="" suffix="" suffixOverrides="and" >
+    <if test="orderId != null" >
+      order_id = #{orderId} and
+    </if>
+    <if test="orderDate != null" >
+      order_date = #{orderDate} and
+    </if>
+    <if test="orderUser != null" >
+      order_user = #{orderUser} and
+    </if>
+    <if test="orderStatus != null" >
+      order_status = #{orderStatus} and
+    </if>
+    <if test="orderPrice != null" >
+      order_price = #{orderPrice} and
+    </if>
+    <if test="paymentMethod != null" >
+      payment_method = #{paymentMethod} and
+    </if>
+    <if test="logisticsCompany != null" >
+      logistics_company = #{logisticsCompany} and
+    </if>
+    <if test="logisticsNumber != null" >
+      logistics_number = #{logisticsNumber} and
+    </if>
+    <if test="logisticsPrice != null" >
+      logistics_price = #{logisticsPrice} and
+    </if>
+    <if test="deleteFlag != null" >
+      delete_flag = #{deleteFlag} and
+    </if>
+    <if test="orderContext != null" >
+      order_context = #{orderContext} and
+    </if>
+    <if test="recommendedOrder != null" >
+      recommended_order = #{recommendedOrder} and
+    </if>
+    <if test="orderUuid != null" >
+      order_uuid = #{orderUuid} and
+    </if>
+    </trim>
+  </select>
+
+
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from orders where
+    <trim prefix="" suffix="" suffixOverrides="and" >
+    <if test="orderId != null" >
+      order_id = #{orderId} and
+    </if>
+    <if test="orderDate != null" >
+      order_date = #{orderDate} and
+    </if>
+    <if test="orderUser != null" >
+      order_user = #{orderUser} and
+    </if>
+    <if test="orderStatus != null" >
+      order_status = #{orderStatus} and
+    </if>
+    <if test="orderPrice != null" >
+      order_price = #{orderPrice} and
+    </if>
+    <if test="paymentMethod != null" >
+      payment_method = #{paymentMethod} and
+    </if>
+    <if test="logisticsCompany != null" >
+      logistics_company = #{logisticsCompany} and
+    </if>
+    <if test="logisticsNumber != null" >
+      logistics_number = #{logisticsNumber} and
+    </if>
+    <if test="logisticsPrice != null" >
+      logistics_price = #{logisticsPrice} and
+    </if>
+    <if test="deleteFlag != null" >
+      delete_flag = #{deleteFlag} and
+    </if>
+    <if test="orderContext != null" >
+      order_context = #{orderContext} and
+    </if>
+    <if test="recommendedOrder != null" >
+      recommended_order = #{recommendedOrder} and
+    </if>
+    <if test="orderUuid != null" >
+      order_uuid = #{orderUuid} and
+    </if>
+    </trim>
+  </select>
+
+    <delete id="deleteByOrderId" parameterType="com.weikwer.market.bean.Orders">
+        DELETE FROM orders WHERE
+        <trim prefix="" suffix="" suffixOverrides="and" >
+            order_id = #{orderId} and
+        </trim>
+    </delete>
+
+    <update id="delWithFlag" parameterType="java.lang.Long">
+      update orders
+      <set>
+        delete_flag=1
+      </set>
+        where
+        order_id = #{orderId}
+    </update>
+
+
+    <update id="updateWithMap" parameterType="com.weikwer.market.bean.Orders">
+        update orders
+        <set>
+            <trim prefix="" suffix="" suffixOverrides="," >
+                <if test="orderDate != null" >
+                    order_date = #{orderDate} ,
+                </if>
+                <if test="orderUser != null" >
+                    order_user = #{orderUser} ,
+                </if>
+                <if test="orderStatus != null" >
+                    order_status = #{orderStatus} ,
+                </if>
+                <if test="orderPrice != null" >
+                    order_price = #{orderPrice} ,
+                </if>
+                <if test="paymentMethod != null" >
+                    payment_method = #{paymentMethod} ,
+                </if>
+                <if test="logisticsCompany != null" >
+                    logistics_company = #{logisticsCompany} ,
+                </if>
+                <if test="logisticsNumber != null" >
+                    logistics_number = #{logisticsNumber} ,
+                </if>
+                <if test="logisticsPrice != null" >
+                    logistics_price = #{logisticsPrice} ,
+                </if>
+                <if test="deleteFlag != null" >
+                    delete_flag = #{deleteFlag} ,
+                </if>
+                <if test="orderContext != null" >
+                    order_context = #{orderContext} ,
+                </if>
+                <if test="recommendedOrder != null" >
+                    recommended_order = #{recommendedOrder} ,
+                </if>
+                <if test="orderUuid != null" >
+                    order_uuid = #{orderUuid} ,
+                </if>
+            </trim>
+        </set>
+        where
+                order_id = #{orderId}
+    </update>
+</mapper>
