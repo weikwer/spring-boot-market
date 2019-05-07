@@ -8,3 +8,5 @@
 没有log
 
 至少一个demo，功能很不完善，数据库表的设计以及业务没有考虑太多
+
+数据库表为  /src/main/resources/market.sql
